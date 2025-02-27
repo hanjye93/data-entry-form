@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Form</title>
+</head>
+<body>
+    <h1>Data Entry Form</h1>
+    <form id="dataForm">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+        
+        <label for="rm">RM:</label>
+        <input type="number" id="rm" name="rm" required><br><br>
+        
+        <label for="item">Item:</label>
+        <input type="text" id="item" name="item" required><br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = {
+                date: document.getElementById('date').value,
+                rm: document.getElementById('rm').value,
+                item: document.getElementById('item').value
+            };
+
+            fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert('Data saved successfully!');
+                document.getElementById('dataForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
